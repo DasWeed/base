@@ -1,0 +1,76 @@
+
+{% extends "base.html" %}
+
+{% block title %} clientes {% endblock%}
+
+{% block content %} 
+    <div class ="container py-4">
+        <div class="row">
+
+            
+            <div class = "col-md-4">
+                <h2>Agregar nueva venta</h2>
+                <div class ="card"> 
+                    <div class="card-body ">
+
+                        <form action="">
+                            <div class="form-group">
+                                <input type="text" name = "txtNombre" class="form-control" placeholder="Nombre">
+                            </div>
+                            <div class="form-group">
+                                <input type="date" name = "txtfechacompra" class="form-control" placeholder="Fecha" >
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name = "txtnumero" class="form-control" placeholder="Numero" >
+                            </div>
+
+
+
+                            <div class="form-group">
+                                <input type="sumbit" class = "btn btn-success btn-lg btn-block text-white" value="Guardar">
+                            </div>
+                            
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+
+
+            <div class="col-md-8">
+                <h2>Clientes</h2>
+                <div class="card">
+                    <div class = "table-responsive">
+                        <table class = "table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>nombre</th>
+                                    <th>Fecha</th>
+                        
+                                    <th>Correo</th>
+                                    <th>Numero</th>
+                                </tr>   
+                            </thead>
+                            <tbody>
+                                {% for c in object_list%}
+                                <tr>
+                                    <td>{{c.nombre}} {{c.ap_paterno}}</td>
+                                    <td>{{c.fechanacimiento}}</td>
+                    
+                                    <td>{{c.correo}}</td>
+                                    <td>{{c.telefono}}</td>
+                                    <td><a href="edit/{{c.id_cliente}}" class="btn btn-sm btn-block btn-primary">Editar</a></td>
+                                    <td><a href="eliminacioncliente/{{c.id_cliente}}" class="btn btn-sm btn-block btn-danger" >Eliminar</a></td>
+                                </tr>
+                                {% endfor%}
+                            </tbody>
+                        </table>
+                        
+                    </div>
+                </div>
+              
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
