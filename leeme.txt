@@ -1,0 +1,1 @@
+necesitan descargar django y unas dependencias para que funcione
