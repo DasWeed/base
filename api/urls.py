@@ -13,5 +13,8 @@ urlpatterns = [
 
     path('edit/<slug:id_cliente>',editar_cliente),
     path('clientes/eliminacioncliente/<slug:id_cliente>',eliminar_cliente),
+    
+    
+    path('edit/<slug:venta_id>',editar_venta),
     path('ventas/eliminacionventa/<slug:venta_id>',eliminar_venta)
 ]

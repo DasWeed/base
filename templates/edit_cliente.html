@@ -1,0 +1,23 @@
+
+{% extends "base.html" %}
+
+{% block title %} edicion {% endblock%}
+
+
+{%block content %}
+    <div class="container py-4">
+        <div class="row">
+            <h2>edicicion de cliente</h2>
+            <div class="card">
+                <div class="card-content">
+                    <div class = "navbar-nav">
+                        <input type="text" name="txtnombrecliente" class="form-control" placeholder="Nombre" value={{cliente.nombre}}>
+                         <input type="text" name ="txtapellidopcliente" class="form-control" placeholder="apellido paterno" value={{cliente.ap_paterno}}>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

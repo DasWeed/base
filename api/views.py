@@ -22,13 +22,15 @@ class ventaview(ListView):
     model = Venta
     template_name = 'lista_venta.html'
 
-def eliminar_venta(self,venta_id):
+def eliminar_venta(request,venta_id):
 
     Dventa= DetalleVenta.objects.get(venta_id=venta_id).delete()
     venta= Venta.objects.get(id_venta=venta_id).delete()
         
     return redirect('/ventas')
-
+    
+def editar_venta(self,venta_id):
+    pass
 
 
 
@@ -40,11 +42,12 @@ class clientesView(ListView):
 
 
 
-def editar_cliente(self, id_cliente):
-    Dventa= Cliente.objects.get(id_cliente=id_cliente)
+def editar_cliente(request, id_cliente):
+    cliente= Cliente.objects.get(id_cliente=id_cliente)
+    return render (request,"edit_cliente.html",{'cliente':cliente})
  
 
-def eliminar_cliente(self,id_cliente):
+def eliminar_cliente(request,id_cliente):
 
     Dventa= Cliente.objects.get(id_cliente=id_cliente).delete()
         
