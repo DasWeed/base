@@ -5,7 +5,7 @@ from django.http.response import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from django.views import View
-from .models import DetalleVenta, EspecifCarro, Venta, Cliente
+from .models import DetalleVenta, EspecifCarro, Venta, Cliente, Prestamo
 from django.views.generic import ListView
 from django.shortcuts import render
 
@@ -41,16 +41,37 @@ class clientesView(ListView):
     template_name = 'lista_clientes.html'  
 
 
-
+def new_cliente(request):
+    pass
 def editar_cliente(request, id_cliente):
-    cliente= Cliente.objects.get(id_cliente=id_cliente)
+    cliente = Cliente.objects.get(id_cliente=id_cliente)
     return render (request,"edit_cliente.html",{'cliente':cliente})
- 
+#----------------------------------------------------------------un objeto para renderizar la plantilla y otro metodo para mandar los datos por un metodo POST
+def editar_cliente_post (request):
+    #id= request.POST['txtid_cliente']
+    id = request.POST.get('txtid_cliente')
+    print("---> ID",id)
+    nombre =  request.POST['txtnombrecliente']
+    ap_pat = request.POST.get('txtapellidopcliente')
+    ap_ma = request.POST['txtapellidomcliente']
+    fecha = request.POST['fnacimiento']
+    correoe = request.POST['email']
+    numero = request.POST['phonecliente']
+
+    
+    cliente= Cliente.objects.get(id_cliente=id)
+    cliente.nombre = nombre
+    cliente.ap_paterno = ap_pat
+    cliente.ap_materno = ap_ma
+    cliente.fechanacimiento = fecha
+    cliente.telefono = numero
+    cliente.correo =correoe
+    cliente.save()
+    return redirect('/clientes')
 
 def eliminar_cliente(request,id_cliente):
-
+    prest_cliente = Prestamo.objects.get(cliente=id_cliente).delete()  
     Dventa= Cliente.objects.get(id_cliente=id_cliente).delete()
-        
     return redirect('/clientes')
 
 
