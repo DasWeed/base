@@ -12,7 +12,7 @@
                 <div class="card-body">
                     <form action="/edit/" method="POST"> {% csrf_token %}
                         <div class = "navbar-nav">
-                            <input type="text" name="txtid_cliente"  class="form-control" text disab  value="{{cliente.id_cliente}}" readonly required>
+                            <input type="text" name="txtid_cliente"  class="form-control"  value="{{cliente.id_cliente}}" readonly required>
                             <input type="text" name="txtnombrecliente" class="form-control" placeholder="Nombre" value={{cliente.nombre}}>
                             <input type="text" name ="txtapellidopcliente" class="form-control" placeholder="apellido paterno" value={{cliente.ap_paterno}}>
                             <input type="text" name ="txtapellidomcliente" class="form-control" placeholder="apellido materno" value={{cliente.ap_materno}}>

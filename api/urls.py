@@ -12,7 +12,7 @@ urlpatterns = [
     path('clientes',clientesView.as_view(), name='clientes'),
     path('autos',autosView.as_view(), name='autos'),
 
-
+    path('create/',new_cliente),
     path('clientes/edit/<slug:id_cliente>',editar_cliente),
     path('edit/',editar_cliente_post),
     path('clientes/eliminacioncliente/<slug:id_cliente>',eliminar_cliente),

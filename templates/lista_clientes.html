@@ -13,16 +13,17 @@
                 <div class ="card"> 
                     <div class="card-body ">
 
-                        <form action="/create/">
+                        <form action="/create/"method="POST"> {% csrf_token %}
                            
                             <div class="form-group">
-                                <input type="text" name="txtid_cliente"  class="form-control" text disab  value="{{cliente.id_cliente}}" readonly required>
-                                <input type="text" name="txtnombrecliente" class="form-control" placeholder="Nombre" value={{cliente.nombre}}>
-                                <input type="text" name ="txtapellidopcliente" class="form-control" placeholder="apellido paterno" value={{cliente.ap_paterno}}>
-                                <input type="text" name ="txtapellidomcliente" class="form-control" placeholder="apellido materno" value={{cliente.ap_materno}}>
-                                <input type="date" name = "fnacimiento" class="form-control" value="{{cliente.fechanacimiento}}" >
-                                <input type="email" name="email" class="form-control" value="{{cliente.correo}}" placeholder  ="correo">
-                                 <input type="phone" name ="phonecliente" class="form-control" placeholder="telefono" value={{cliente.telefono}}>
+                                
+                                <input type="text" id ="txtnombrecliente" name="txtnombrecliente" class="form-control" placeholder="Nombre" >
+                                <input type="text" name ="txtapellidopcliente" class="form-control" placeholder="apellido paterno" >
+                                <input type="text" name ="txtapellidomcliente" class="form-control" placeholder="apellido materno" >
+                                <input type="date" name = "fnacimiento" class="form-control"  >
+                                <input type="email" name="email" class="form-control"  placeholder  ="correo">
+                                <input type="phone" name ="phonecliente" class="form-control" placeholder="telefono" >
+                                <input type="number" name="numdireccion" id="numdireccion" class="form-control" placeholder="Direccion">
                             </div>
 
 

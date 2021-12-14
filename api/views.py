@@ -5,7 +5,7 @@ from django.http.response import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from django.views import View
-from .models import DetalleVenta, EspecifCarro, Venta, Cliente, Prestamo
+from .models import DetalleVenta, EspecifCarro, Venta, Cliente, Prestamo,Direccion
 from django.views.generic import ListView
 from django.shortcuts import render
 
@@ -36,23 +36,48 @@ def editar_venta(self,venta_id):
 
 
 
+
+
 class clientesView(ListView):
     model = Cliente
-    template_name = 'lista_clientes.html'  
+    template_name = 'lista_clientes.html' 
 
 
 def new_cliente(request):
-    id = request.POST.get('txtid_cliente')
-    print("---> ID",id)
+    
+    lastid= Cliente.objects.latest('id_cliente')
+    id = lastid.id_cliente
+    id = int(id[2:7])+1
+    id = "CL"+str(id)
+  
+    
+
+
     nombre =  request.POST['txtnombrecliente']
     ap_pat = request.POST.get('txtapellidopcliente')
-    ap_ma = request.POST['txtapellidomcliente']
-    fecha = request.POST['fnacimiento']
-    correoe = request.POST['email']
-    numero = request.POST['phonecliente']
+    ap_ma = request.POST.get('txtapellidomcliente')
+    fecha = request.POST.get('fnacimiento')
+    correo = request.POST.get('email')
+    numero = request.POST.get('phonecliente')
+    direccion = request.POST.get('numdireccion')
+    ncliente = Cliente.objects.create(
+        id_cliente = id,
+        nombre=nombre,
+        ap_paterno =ap_pat,
+        ap_materno = ap_ma,
+        fechanacimiento = fecha,
+        correo = correo,
+        telefono = numero,
+        direccion_id = direccion
+
+        
+    )
+  
     
     return redirect('/clientes')
 
+
+#------------------------------------------------------------- EDITAR-----------------
 
 def editar_cliente(request, id_cliente):
     cliente = Cliente.objects.get(id_cliente=id_cliente)
@@ -80,9 +105,17 @@ def editar_cliente_post (request):
     cliente.save()
     return redirect('/clientes')
 
+
 def eliminar_cliente(request,id_cliente):
-    prest_cliente = Prestamo.objects.get(cliente=id_cliente).delete()  
-    Dventa= Cliente.objects.get(id_cliente=id_cliente).delete()
+    prest_cliente = Prestamo.objects.filter(cliente=id_cliente).exists()
+    print(prest_cliente)
+    if prest_cliente == False:
+
+        Dventa= Cliente.objects.get(id_cliente=id_cliente).delete()
+    else:
+        rest_cliente = Prestamo.objects.get(cliente=id_cliente).delete()
+
+        Dventa= Cliente.objects.get(id_cliente=id_cliente).delete()
     return redirect('/clientes')
 
 
@@ -93,3 +126,9 @@ def eliminar_cliente(request,id_cliente):
 class autosView(ListView):
     model =EspecifCarro
     template_name ="lista_autos.html"
+
+def editar_auto(self, id_auto):
+    pass
+
+def eliminar_auto(self):
+    pass

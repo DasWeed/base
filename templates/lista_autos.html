@@ -9,7 +9,7 @@
 
             
             <div class = "col-md-4">
-                <h2>Agregar nueva venta</h2>
+                <h2>Agregar auto</h2>
                 <div class ="card"> 
                     <div class="card-body ">
 
@@ -23,11 +23,14 @@
                             <div class="form-group">
                                 <input type="text" name = "txtnumero" class="form-control" placeholder="Numero" >
                             </div>
+                            <div class="form-group">
+                                
+                            </div>
 
 
 
                             <div class="form-group">
-                                <input type="sumbit" class = "btn btn-success btn-lg btn-block text-white" value="Guardar">
+                                <button type="sumbit" class = "btn btn-success btn-lg btn-block text-white"  >Guardar </button>
                             </div>
                             
                         </form>
@@ -38,7 +41,7 @@
 
 
             <div class="col-md-8">
-                <h2>Clientes</h2>
+                <h2>Autos</h2>
                 <div class="card">
                     <div class = "table-responsive">
                         <table class = "table table-striped">
@@ -54,11 +57,9 @@
                             <tbody>
                                 {% for auto in object_list%}
                                 <tr>
-                                    <td>{{auto.version_carro}} {{c.ap_paterno}}</td>
-                                    <td>{{c.fechanacimiento}}</td>
-                    
-                                    <td>{{c.correo}}</td>
-                                    <td>{{c.telefono}}</td>
+                                    <td>{{auto.version_carro}}</td>
+                                    <td>{{auto.anio}}</td>
+                                    <td>{{auto.modelo.nombre}}</td>
                                     <td><a href="edicionCliente/{{c.id_cliente}}" class="btn btn-sm btn-block btn-primary">Editar</a></td>
                                     <td><a href="eliminacioncliente/{{c.id_cliente}}" class="btn btn-sm btn-block btn-danger" >Eliminar</a></td>
                                 </tr>
