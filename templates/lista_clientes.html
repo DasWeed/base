@@ -9,25 +9,26 @@
 
             
             <div class = "col-md-4">
-                <h2>Agregar nueva venta</h2>
+                <h2>Agregar nuevo cliente</h2>
                 <div class ="card"> 
                     <div class="card-body ">
 
-                        <form action="">
+                        <form action="/create/">
+                           
                             <div class="form-group">
-                                <input type="text" name = "txtNombre" class="form-control" placeholder="Nombre">
-                            </div>
-                            <div class="form-group">
-                                <input type="date" name = "txtfechacompra" class="form-control" placeholder="Fecha" >
-                            </div>
-                            <div class="form-group">
-                                <input type="text" name = "txtnumero" class="form-control" placeholder="Numero" >
+                                <input type="text" name="txtid_cliente"  class="form-control" text disab  value="{{cliente.id_cliente}}" readonly required>
+                                <input type="text" name="txtnombrecliente" class="form-control" placeholder="Nombre" value={{cliente.nombre}}>
+                                <input type="text" name ="txtapellidopcliente" class="form-control" placeholder="apellido paterno" value={{cliente.ap_paterno}}>
+                                <input type="text" name ="txtapellidomcliente" class="form-control" placeholder="apellido materno" value={{cliente.ap_materno}}>
+                                <input type="date" name = "fnacimiento" class="form-control" value="{{cliente.fechanacimiento}}" >
+                                <input type="email" name="email" class="form-control" value="{{cliente.correo}}" placeholder  ="correo">
+                                 <input type="phone" name ="phonecliente" class="form-control" placeholder="telefono" value={{cliente.telefono}}>
                             </div>
 
 
 
                             <div class="form-group">
-                                <input type="sumbit" class = "btn btn-success btn-lg btn-block text-white" value="Guardar">
+                                <button type="sumbit" class = "btn btn-success btn-lg btn-block text-white"  >Guardar </button>
                             </div>
                             
                         </form>
@@ -59,8 +60,8 @@
                     
                                     <td>{{c.correo}}</td>
                                     <td>{{c.telefono}}</td>
-                                    <td><a href="edit/{{c.id_cliente}}" class="btn btn-sm btn-block btn-primary">Editar</a></td>
-                                    <td><a href="eliminacioncliente/{{c.id_cliente}}" class="btn btn-sm btn-block btn-danger" >Eliminar</a></td>
+                                    <td><a href="clientes/edit/{{c.id_cliente}}" class="btn btn-sm btn-block btn-primary">Editar</a></td>
+                                    <td><a href="clientes/eliminacioncliente/{{c.id_cliente}}" class="btn btn-sm btn-block btn-danger" >Eliminar</a></td>
                                 </tr>
                                 {% endfor%}
                             </tbody>

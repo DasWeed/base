@@ -42,7 +42,18 @@ class clientesView(ListView):
 
 
 def new_cliente(request):
-    pass
+    id = request.POST.get('txtid_cliente')
+    print("---> ID",id)
+    nombre =  request.POST['txtnombrecliente']
+    ap_pat = request.POST.get('txtapellidopcliente')
+    ap_ma = request.POST['txtapellidomcliente']
+    fecha = request.POST['fnacimiento']
+    correoe = request.POST['email']
+    numero = request.POST['phonecliente']
+    
+    return redirect('/clientes')
+
+
 def editar_cliente(request, id_cliente):
     cliente = Cliente.objects.get(id_cliente=id_cliente)
     return render (request,"edit_cliente.html",{'cliente':cliente})
@@ -57,7 +68,7 @@ def editar_cliente_post (request):
     fecha = request.POST['fnacimiento']
     correoe = request.POST['email']
     numero = request.POST['phonecliente']
-
+    
     
     cliente= Cliente.objects.get(id_cliente=id)
     cliente.nombre = nombre

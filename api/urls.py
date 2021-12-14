@@ -7,9 +7,17 @@ urlpatterns = [
     path('ventas/',ventaview.as_view() , name='ventas'),
     path('ventas/<slug:id_venta>', ventaview.as_view(), name='proceso_de_venta'),
     path('',home),
+
+    
     path('clientes',clientesView.as_view(), name='clientes'),
     path('autos',autosView.as_view(), name='autos'),
 
+
+    path('clientes/edit/<slug:id_cliente>',editar_cliente),
+    path('edit/',editar_cliente_post),
+    path('clientes/eliminacioncliente/<slug:id_cliente>',eliminar_cliente),
+    
+    
     path('edit/<slug:venta_id>',editar_venta),
     path('ventas/eliminacionventa/<slug:venta_id>',eliminar_venta)
 ]

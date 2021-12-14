@@ -55,7 +55,7 @@ ROOT_URLCONF = 'base.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['C:/Users/Alfonso/OneDrive/Universidad/Septimo semestre/base de datos/Django Api/base/templates/'],
+        'DIRS': ['C:/Users/Alfonso/OneDrive/Universidad/Septimo semestre/base de datos/Django Api/base/templates/'], # carpeta donde se encuentra las templates para ahorrar codigo
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -78,8 +78,8 @@ DATABASES = {
  'default': {
         'ENGINE': 'django.db.backends.oracle',
         'NAME': '127.0.0.1:1521/XEPDB1',
-        'USER': 'prueba',
-        'PASSWORD': 'esime',
+        'USER': 'prueba', #esto se cambia segun su usuario 
+        'PASSWORD': 'esime', #contrasena del usuario 
         'TEST': {
             'USER': 'default_test',
             'TBLSPACE': 'default_test_tbls',
