@@ -1,0 +1,33 @@
+
+{% extends "base.html" %}
+
+{% block title %} edicion {% endblock%}
+
+
+{%block content %}
+    <div class="container py-4">
+        <div class="row">
+            <h2>edicicion de cliente</h2>
+            <div class="card">
+                <div class="card-body">
+                    <form action="/edit/auto/" method="POST"> {% csrf_token %}
+                        <div class = "navbar-nav">
+                            <input type="text" name="idcarro"  class="form-control"  value="{{auto.id_especif_carro}}" readonly required>
+                            <input type="text" name="version" class="form-control" placeholder="version del carro" value={{auto.version_carro}}>
+                            <input type="number" name ="anio" class="form-control" placeholder="año" value={{auto.anio}}>
+                            <input type="number" name ="potencia" class="form-control" placeholder=" potencia" value={{auto.hp}}>
+                            <input type="text" name = "modelo" class="form-control" value="{{auto.modelo.nombre}}" >
+                            <input type="number" name="costo" class="form-control" value="{{auto.costo}}">
+                        </div>
+                        <div class="form-group">
+                            <button type="sumbit" class = "btn btn-success btn-lg btn-block text-white"  >Guardar </button>
+                        </div> 
+                    </form>
+
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

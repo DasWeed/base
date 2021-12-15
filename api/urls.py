@@ -6,11 +6,18 @@ from .views import*
 urlpatterns = [
     path('ventas/',ventaview.as_view() , name='ventas'),
     path('ventas/<slug:id_venta>', ventaview.as_view(), name='proceso_de_venta'),
-    path('',home),
+    path('',home, name='Inicio'),
+    path('ventas/edit/<slug:id_venta>',editar_venta),
+    path('ventas/editar',editar_venta_post),
 
     
     path('clientes',clientesView.as_view(), name='clientes'),
+
+
+
     path('autos',autosView.as_view(), name='autos'),
+    path('edit/auto/<slug:id_especif_carro>',editar_auto, name='editar auto'),
+    path('edit/auto/',editar_auto_post),
 
     path('create/',new_cliente),
     path('clientes/edit/<slug:id_cliente>',editar_cliente),

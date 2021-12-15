@@ -15,20 +15,17 @@
 
                         <form action="">
                             <div class="form-group">
-                                <input type="text" name = "txtNombre" class="form-control" placeholder="Nombre">
+                                <input type="text" name = "version" class="form-control" placeholder="version">
                             </div>
                             <div class="form-group">
-                                <input type="date" name = "txtfechacompra" class="form-control" placeholder="Fecha" >
+                                <input type="text" name = "anio" class="form-control" placeholder="Año" >
                             </div>
                             <div class="form-group">
-                                <input type="text" name = "txtnumero" class="form-control" placeholder="Numero" >
+                                <input type="number" name = "costo" class="form-control" placeholder="Costo" min="0" max="">
                             </div>
                             <div class="form-group">
-                                
+                                <input type="number" name = "Potencia" class="form-control" placeholder="Potencia" min="0" max="">
                             </div>
-
-
-
                             <div class="form-group">
                                 <button type="sumbit" class = "btn btn-success btn-lg btn-block text-white"  >Guardar </button>
                             </div>
@@ -47,11 +44,10 @@
                         <table class = "table table-striped">
                             <thead>
                                 <tr>
-                                    <th>nombre</th>
-                                    <th>Fecha</th>
-                        
-                                    <th>Correo</th>
-                                    <th>Numero</th>
+                                    <th>Modelo</th>
+                                    <th>Año</th>
+                                    <th>Version</th>
+                                    <th>presio</th>
                                 </tr>   
                             </thead>
                             <tbody>
@@ -60,8 +56,9 @@
                                     <td>{{auto.version_carro}}</td>
                                     <td>{{auto.anio}}</td>
                                     <td>{{auto.modelo.nombre}}</td>
-                                    <td><a href="edicionCliente/{{c.id_cliente}}" class="btn btn-sm btn-block btn-primary">Editar</a></td>
-                                    <td><a href="eliminacioncliente/{{c.id_cliente}}" class="btn btn-sm btn-block btn-danger" >Eliminar</a></td>
+                                    <td>{{auto.costo}} $$</td>
+                                    <td><a href="edit/auto/{{auto.id_especif_carro}}" class="btn btn-sm btn-block btn-primary">Editar</a></td>
+                                    <td><a href="eliminar/{{auto.id_especif_carro}}" class="btn btn-sm btn-block btn-danger" >Eliminar</a></td>
                                 </tr>
                                 {% endfor%}
                             </tbody>

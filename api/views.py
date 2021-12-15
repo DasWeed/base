@@ -29,7 +29,13 @@ def eliminar_venta(request,venta_id):
         
     return redirect('/ventas')
     
-def editar_venta(self,venta_id):
+def editar_venta(request,id_venta):
+    venta = Venta.objects.get(id_venta=id_venta)
+    return render(request,"editar_venta.html",{'venta':venta})
+
+def editar_venta_post(request):
+    id = request.POST.get('id_venta')
+    print(id)
     pass
 
 
@@ -60,6 +66,7 @@ def new_cliente(request):
     correo = request.POST.get('email')
     numero = request.POST.get('phonecliente')
     direccion = request.POST.get('numdireccion')
+
     ncliente = Cliente.objects.create(
         id_cliente = id,
         nombre=nombre,
@@ -80,7 +87,7 @@ def new_cliente(request):
 #------------------------------------------------------------- EDITAR-----------------
 
 def editar_cliente(request, id_cliente):
-    cliente = Cliente.objects.get(id_cliente=id_cliente)
+    cliente = Cliente.objects.get(id_cliente=id_cliente) #ORM 
     return render (request,"edit_cliente.html",{'cliente':cliente})
 #----------------------------------------------------------------un objeto para renderizar la plantilla y otro metodo para mandar los datos por un metodo POST
 def editar_cliente_post (request):
@@ -107,7 +114,7 @@ def editar_cliente_post (request):
 
 
 def eliminar_cliente(request,id_cliente):
-    prest_cliente = Prestamo.objects.filter(cliente=id_cliente).exists()
+    prest_cliente = Prestamo.objects.filter(cliente=id_cliente).exists() 
     print(prest_cliente)
     if prest_cliente == False:
 
@@ -123,12 +130,31 @@ def eliminar_cliente(request,id_cliente):
 
 
 
-class autosView(ListView):
+class autosView(ListView):  ## vista para autos 
     model =EspecifCarro
     template_name ="lista_autos.html"
 
-def editar_auto(self, id_auto):
-    pass
+def editar_auto(request, id_especif_carro):
+    auto = EspecifCarro.objects.get(id_especif_carro=id_especif_carro)
+    return render (request,"editar_auto.html",{'auto':auto})
 
+def editar_auto_post(request):
+    id = request.POST.get('idcarro')
+    version = request.POST.get('version')
+    anio = int(request.POST.get('anio'))
+    print(anio)
+    potencia = request.POST.get('potencia')
+    modelo = request.POST.get('modelo')
+    costo = request.POST.get('costo')
+
+
+    Auto = EspecifCarro.objects.get(id_especif_carro=id)
+    Auto.version_carro = version
+    Auto.anio = anio
+    Auto.hp = potencia
+    Auto.modelo.nombre= modelo
+    Auto.costo = costo
+    Auto.save()
+    return redirect('/autos')
 def eliminar_auto(self):
     pass
