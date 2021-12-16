@@ -22,9 +22,17 @@ def home(request):
 
 
 
-class ventaview(ListView):
-    model = DetalleVenta
+class ventaview(TemplateView):
+    #model = DetalleVenta
     template_name = 'lista_venta.html'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['dventa'] = DetalleVenta.objects.all()
+        context['venta'] = Venta.objects.all()
+        context['Sucursal'] = Sucursal.objects.all()
+        context['transmision'] = Transmision.objects.all()
+        context['autos'] = EspecifCarro.objects.all()
+        return context
 
 def eliminar_venta(request,venta_id):
 
@@ -201,6 +209,7 @@ def agregar_auto_nuevo(request):
         garantia = garantia,
         transmision_id= transmision2,
         especifcarro_id = auto,
+
 
     )
 
