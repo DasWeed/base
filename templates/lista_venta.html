@@ -47,6 +47,7 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Fecha</th>
+                                    <th>Auto</th>
                                     <th>Placa</th>
                                     <th>Cliente</th>
                                     <th>Vendedor</th>
@@ -55,11 +56,12 @@
                             <tbody>
                                 {% for venta in object_list%}
                                 <tr>
-                                    <td>{{venta.id_venta}}</td>
-                                    <td>{{venta.fechacompra}}</td>
-                                    <td>{{venta.tramplaca}}</td>
-                                    <td>{{venta.cliente.nombre}}</td>
-                                    <td>{{venta.empleado.nombre}}</td>
+                                    <td>{{venta.venta.id_venta}}</td>
+                                    <td>{{venta.venta.fechacompra}}</td>
+                                    <td>{{venta.lote.especifcarro.modelo.nombre}}</td>
+                                    <td>{{venta.venta.tramplaca}}</td>
+                                    <td>{{venta.venta.cliente.nombre}}</td>
+                                    <td>{{venta.venta.empleado.nombre}}</td>
                                     <td><a href="edit/{{venta.id_venta}}" class="btn btn-sm btn-block btn-primary">Editar</a></td>
                                     <td><a href="eliminacionventa/{{venta.id_venta}}" class="btn btn-sm btn-block btn-danger" >Eliminar</a></td>
                                 </tr>

@@ -1,7 +1,7 @@
 
 {% extends "base.html" %}
 
-{% block title %} Autos {% endblock%}
+{% block title %} Lotes {% endblock%}
 
 {% block content %} 
     <div class ="container py-4">
@@ -9,23 +9,60 @@
 
             
             <div class = "col-md-4">
-                <h2>Agregar auto</h2>
+                <h2>Agregar Lote de auto</h2>
                 <div class ="card"> 
                     <div class="card-body ">
 
-                        <form action="">
+                        <form action="autos/agregar/" method="POST"> {% csrf_token %}
                             <div class="form-group">
-                                <input type="text" name = "version" class="form-control" placeholder="version">
+                                <input type="number" name = "cantidad" class="form-control" placeholder="cantidad" min="1">
                             </div>
                             <div class="form-group">
-                                <input type="text" name = "anio" class="form-control" placeholder="Año" >
+                                <input type="date" name = "fecha" class="form-control" placeholder="Fecha de llegada" >
                             </div>
                             <div class="form-group">
-                                <input type="number" name = "costo" class="form-control" placeholder="Costo" min="0" max="">
+                                <input type="text" name = "color" class="form-control" placeholder="Color" >
                             </div>
                             <div class="form-group">
-                                <input type="number" name = "Potencia" class="form-control" placeholder="Potencia" min="0" max="">
+                                <input type="number" name = "garantia" class="form-control" placeholder="Garantia (meses)" min="0" max="24">
                             </div>
+                            <div class="form-group">
+                                <p>
+                                    <select name="transmision" id="" class="form-control" type ="text">
+                                    
+                                        {% for tipo in transmision%}
+                                        <option>{{forloop.counter}} {{tipo.transmision}}</option>
+                                    
+                                        
+                                        {%endfor%}
+                                    </select>
+                                </p>
+                            </div>
+        
+
+                            <p>
+                                <select name="sucursal" id="" class="form-control" type ="text">
+                                
+                                    {% for tienda in Sucursal%}
+                                    <option>{{tienda.id_sucursal}} {{tienda.nombre}} </option>
+                                
+                                    
+                                    {%endfor%}
+                                </select>
+                            </p>
+                            <div class="form-group">
+                                <p>
+                                    <select name="auto" id="" class="form-control" type ="text">
+                                    
+                                        {% for auto in autos%}
+                                        <option>{{auto.id_especif_carro}} {{auto.modelo.nombre}} </option>
+                                    
+                                        
+                                        {%endfor%}
+                                    </select>
+                                </p>
+                            </div>
+                            
                             <div class="form-group">
                                 <button type="sumbit" class = "btn btn-success btn-lg btn-block text-white"  >Guardar </button>
                             </div>
@@ -48,17 +85,22 @@
                                     <th>Año</th>
                                     <th>Version</th>
                                     <th>presio</th>
+                                    <th>existencia</th>
+                                    <th>color</th>
                                 </tr>   
                             </thead>
                             <tbody>
-                                {% for auto in object_list%}
+                                {% for auto in Lote %}
                                 <tr>
-                                    <td>{{auto.version_carro}}</td>
-                                    <td>{{auto.anio}}</td>
-                                    <td>{{auto.modelo.nombre}}</td>
-                                    <td>{{auto.costo}} $$</td>
-                                    <td><a href="edit/auto/{{auto.id_especif_carro}}" class="btn btn-sm btn-block btn-primary">Editar</a></td>
-                                    <td><a href="eliminar/{{auto.id_especif_carro}}" class="btn btn-sm btn-block btn-danger" >Eliminar</a></td>
+                                    <td>{{auto.especifcarro.version_carro}}</td>
+                                    <td>{{auto.especifcarro.anio}}</td>
+                                    <td>{{auto.especifcarro.modelo.nombre}}</td>
+                                    <td>{{auto.especifcarro.costo}} $$</td>
+                                    <td>{{auto.cantidad}}</td>
+                                    <td>{{auto.color}}</td>
+                                    <td><a href="edit/auto/{{auto.especifcarro.id_especif_carro}}" class="btn btn-sm btn-block btn-primary">Editar</a></td>
+                                    <td><a href="autos/eliminar/{{auto.id_lote}}" class="btn btn-sm btn-block btn-danger" >Eliminar</a></td>
+                                    <td><a href="autos/agregar/existente/{{auto.id_lote}}" class="btn btn-sm btn-block btn-success">Agregar</a></td>
                                 </tr>
                                 {% endfor%}
                             </tbody>

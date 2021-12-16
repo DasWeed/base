@@ -5,9 +5,11 @@ from django.http.response import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from django.views import View
-from .models import DetalleVenta, EspecifCarro, Venta, Cliente, Prestamo,Direccion
+from django.views.generic.base import TemplateView
+from .models import DetalleVenta, EspecifCarro, Transmision, Venta, Cliente, Prestamo,Lote, DetalleVenta, Sucursal
 from django.views.generic import ListView
 from django.shortcuts import render
+from django.db.models import F
 
 
 
@@ -18,8 +20,10 @@ def home(request):
 
 
 
+
+
 class ventaview(ListView):
-    model = Venta
+    model = DetalleVenta
     template_name = 'lista_venta.html'
 
 def eliminar_venta(request,venta_id):
@@ -115,8 +119,8 @@ def editar_cliente_post (request):
 
 def eliminar_cliente(request,id_cliente):
     prest_cliente = Prestamo.objects.filter(cliente=id_cliente).exists() 
-    print(prest_cliente)
-    if prest_cliente == False:
+    venta = Venta.objects.filter(cliente=prest_cliente).exists()
+    if prest_cliente == False :
 
         Dventa= Cliente.objects.get(id_cliente=id_cliente).delete()
     else:
@@ -130,9 +134,15 @@ def eliminar_cliente(request,id_cliente):
 
 
 
-class autosView(ListView):  ## vista para autos 
-    model =EspecifCarro
+class autosView(TemplateView):  ## vista para autos con get context data se puede especificar mas de una tabla en vez de poner model = tabla que nos limita a trabajar sobre una sola tabla+
     template_name ="lista_autos.html"
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['Lote'] = Lote.objects.all()
+        context['Sucursal'] = Sucursal.objects.all()
+        context['transmision'] = Transmision.objects.all()
+        context['autos'] = EspecifCarro.objects.all()
+        return context
 
 def editar_auto(request, id_especif_carro):
     auto = EspecifCarro.objects.get(id_especif_carro=id_especif_carro)
@@ -156,5 +166,56 @@ def editar_auto_post(request):
     Auto.costo = costo
     Auto.save()
     return redirect('/autos')
-def eliminar_auto(self):
-    pass
+
+def agregar_existente(request,id_lote):
+    lote = Lote.objects.get(id_lote=id_lote)
+    lote.cantidad = F('cantidad')+1
+    lote.save(update_fields=['cantidad'])
+
+    return redirect('autos')
+
+def agregar_auto_nuevo(request):
+
+    lastid= Lote.objects.latest('id_lote')
+    id = lastid.id_lote
+    id = int(id)+1
+    print(id)
+
+    cantidad =  request.POST.get('cantidad')
+    fecha = request.POST.get('fecha')
+    color = request.POST.get('color')
+    garantia = request.POST.get('garantia')
+    sucursal = request.POST['sucursal'][0]
+    transmision2 =int (request.POST.get('transmision')[0])
+    auto = request.POST.get('auto')[0:6]
+    
+    print(sucursal, "variable de tipo  ",type(sucursal))
+    print(transmision2)
+    print(auto)
+    
+    new_lote = Lote.objects.create(
+        id_lote = id,
+        fechallegada = fecha,
+        color = color,
+        cantidad = cantidad,
+        garantia = garantia,
+        transmision_id= transmision2,
+        especifcarro_id = auto,
+
+    )
+
+    return redirect('autos')
+    
+def eliminar_auto(request,id_lote):
+    Lot = Lote.objects.get(id_lote=id_lote)
+    if Lot.cantidad == 0:
+        Lot = Lote.objects.get(id_lote=id_lote).delete
+    else:
+        Lot.cantidad -= 1
+        Lot.save(update_fields=['cantidad'])
+    
+
+   
+    return redirect('/autos')
+    
+

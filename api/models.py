@@ -239,6 +239,26 @@ class Estado(models.Model):
         managed = False
         db_table = 'estado'
 
+class Transmision(models.Model):
+    id_transmision = models.IntegerField(primary_key=True)
+    transmision = models.CharField(max_length=15)
+
+    class Meta:
+        managed = False
+        db_table = 'transmision'
+
+class Sucursal(models.Model):
+    id_sucursal = models.IntegerField(primary_key=True)
+    nombre = models.CharField(max_length=30)
+    telefono = models.IntegerField(blank=True, null=True)
+    correo = models.CharField(max_length=30, blank=True, null=True)
+    direccion = models.ForeignKey(Direccion, models.DO_NOTHING)
+
+    class Meta:
+        managed = False
+        db_table = 'sucursal'
+
+
 
 class Lote(models.Model):
     id_lote = models.IntegerField(primary_key=True)
@@ -246,8 +266,8 @@ class Lote(models.Model):
     color = models.CharField(max_length=30, blank=True, null=True)
     cantidad = models.IntegerField(blank=True, null=True)
     garantia = models.IntegerField(blank=True, null=True)
-    transmision = models.ForeignKey('Transmision', models.DO_NOTHING, blank=True, null=True)
-    sucursal = models.ForeignKey('Sucursal', models.DO_NOTHING, blank=True, null=True)
+    transmision = models.ForeignKey(Transmision, models.DO_NOTHING, blank=True, null=True)
+    sucursal = models.ForeignKey(Sucursal, models.DO_NOTHING, blank=True, null=True)
     especifcarro = models.ForeignKey(EspecifCarro, models.DO_NOTHING, blank=True, null=True)
 
     class Meta:
@@ -318,25 +338,6 @@ class StatusPrestamo(models.Model):
         db_table = 'status_prestamo'
 
 
-class Sucursal(models.Model):
-    id_sucursal = models.IntegerField(primary_key=True)
-    nombre = models.CharField(max_length=30)
-    telefono = models.IntegerField(blank=True, null=True)
-    correo = models.CharField(max_length=30, blank=True, null=True)
-    direccion = models.ForeignKey(Direccion, models.DO_NOTHING)
-
-    class Meta:
-        managed = False
-        db_table = 'sucursal'
-
-
-class Transmision(models.Model):
-    id_transmision = models.BooleanField(primary_key=True)
-    transmision = models.CharField(max_length=15)
-
-    class Meta:
-        managed = False
-        db_table = 'transmision'
 
 
 class Venta(models.Model):
