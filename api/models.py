@@ -125,6 +125,14 @@ class Cliente(models.Model):
         db_table = 'cliente'
 
 
+
+
+
+
+
+
+
+
 class DetalleVenta(models.Model):
     venta = models.OneToOneField('Venta', models.DO_NOTHING, primary_key=True)
     lote = models.ForeignKey('Lote', models.DO_NOTHING)

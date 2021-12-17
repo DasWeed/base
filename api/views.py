@@ -6,7 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.generic.base import TemplateView
-from .models import DetalleVenta, EspecifCarro, Transmision, Venta, Cliente, Prestamo,Lote, DetalleVenta, Sucursal
+from .models import DetalleVenta, Empleado, EspecifCarro, Modopago, Paquete, Transmision, Venta, Cliente, Prestamo,Lote, DetalleVenta, Sucursal
 from django.views.generic import ListView
 from django.shortcuts import render
 from django.db.models import F
@@ -27,11 +27,14 @@ class ventaview(TemplateView):
     template_name = 'lista_venta.html'
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['dventa'] = DetalleVenta.objects.all()
-        context['venta'] = Venta.objects.all()
-        context['Sucursal'] = Sucursal.objects.all()
-        context['transmision'] = Transmision.objects.all()
+        context['dventas'] = DetalleVenta.objects.all()
+        context['ventas'] = Venta.objects.all()
+        context['paquetes'] = Paquete.objects.all()
         context['autos'] = EspecifCarro.objects.all()
+        context['lote'] = Lote.objects.all()
+        context['clientes'] = Cliente.objects.all()
+        context['pago'] = Modopago.objects.all()
+        context['empleado'] = Empleado.objects.all()
         return context
 
 def eliminar_venta(request,venta_id):
@@ -49,6 +52,67 @@ def editar_venta_post(request):
     id = request.POST.get('id_venta')
     print(id)
     pass
+
+
+def new_venta(request):
+    
+   
+    #detalle venta
+    idventa = Venta.objects.latest('id_venta')
+    idventa = idventa.id_venta
+
+
+    idventa = int(idventa[2:7])+1 # se utilza tanto en la tabla de detalle de venta como en la de venta 
+    idventa = "VN"+str(idventa)
+    paquete = request.POST.get('paquete')[0]
+    unidades = request.POST.get('cantidad')
+    idlote = request.POST.get('lote')[0:5]
+
+    
+
+    #tabla de venta
+
+    idcliente =  request.POST.get('cliente')[0:7]
+    empleado = request.POST.get('empleado')[0:7]
+    fecha = request.POST.get('fechacompra')
+    placas = request.POST.get('placa')
+    pago = request.POST.get('metodopago')[0]
+    plazos = request.POST.get('plazospago')
+    
+    
+    nventa = Venta.objects.create(
+        id_venta =idventa,
+        fechacompra = fecha,
+        plazospagar = plazos,
+        tramplaca = placas,
+        modopago_id =pago,
+        cliente_id = idcliente,
+        empleado_id = empleado
+    )
+    ndetalleventa = DetalleVenta.objects.create(
+        venta_id =str(idventa),
+        lote_id =idlote,
+        paquete_id =paquete,
+        cantidad =unidades
+    )
+  
+
+    print("el id de la venta es ", idventa)
+    print("el id del lote es ---> ",idlote)
+    print("el total de autos que vas a comprar es de ",  unidades ," acaso eres rico??")
+    print("el paquete es --->",paquete)
+    print("cliente ---->",idcliente)
+    print("el cliente es" ,idcliente)
+    print("realizo la venta el empleado" ,empleado)
+    print("se hizo la compra la fecha :",fecha)
+    print("hay tramite de placas?",placas)
+    print("el metodo de pago es :",pago)
+    print("el auto se vendio a ",plazos)
+
+    
+    return redirect('/ventas')
+
+
 
 
 

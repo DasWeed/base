@@ -14,6 +14,7 @@ urlpatterns = [
     path('ventas/editar',editar_venta_post),
     path('edit/<slug:venta_id>',editar_venta),
     path('ventas/eliminacionventa/<slug:venta_id>',eliminar_venta),
+    path('ventas/new/',new_venta),
 
 
     path('autos',autosView.as_view(), name='autos'),

@@ -14,21 +14,84 @@
                 <div class ="card"> 
                     <div class="card-body ">
 
-                        <form action="">
+                        <form action="/ventas/new/" method="POST"> {% csrf_token %}
                             <div class="form-group">
-                                <input type="text" name = "txtNombre" class="form-control" placeholder="Nombre">
+                                <p>
+                                    <label for="fname">Auto:</label><br>
+                                    <select name="lote" id="" class="form-control" type ="text">
+                                    
+                                        {% for tipo in lote%}
+                                        <option>{{tipo.id_lote}} {{tipo.especifcarro.version_carro}} {{tipo.especifcarro.modelo.nombre}} {{tipo.color}}</option>
+                                    
+                                        
+                                        {%endfor%}
+                                    </select>
+                                </p>
+                                <p>
+                                    <label for="fname">Paquete:</label><br>
+                                    <select name="paquete" id="" class="form-control" type ="text">
+                                    
+                                        {% for paquete in paquetes%}
+                                        <option>{{paquete.id_paquete}} {{paquete.nombre}} {{tipo.especifcarro.modelo.nombre}}</option>
+                                    
+                                        
+                                        {%endfor%}
+                                    </select>
+                                </p>
+                                <p>
+                                    <label for="fname">Cliente:</label><br>
+                                    <select name="cliente" class="form-control">
+                                        
+                                        {% for cliente in clientes%}
+                                        <option>{{cliente.id_cliente}} {{cliente.nombre}}</option>
+                                    
+                                        
+                                        {%endfor%}
+                                    </select>
+                                </p>
                             </div>
                             <div class="form-group">
-                                <input type="date" name = "txtfechacompra" class="form-control" placeholder="Fecha" >
-                            </div>
-                            <div class="form-group">
-                                <input type="number" name = "numplazospagar" class="form-control" min= "1" max="24" placeholder="plazos a de pago (meses)" >
+                                <label for="fname">cantidad:</label><br>
+                                <input type="number" name = "cantidad" class="form-control" placeholder="cantidad" min="0"   max="10" required value="1">
                             </div>
 
 
 
                             <div class="form-group">
-                                <input type="sumbit" class = "btn btn-success btn-lg btn-block text-white" value="Guardar">
+                                <label for="fname">Fecha de compra:</label><br>
+                                <input type="date" name = "fechacompra" class="form-control" placeholder="Fecha" >
+                            </div>
+                            <div class="form-group">
+                                <input type="number" name = "plazospago" class="form-control" min= "1" max="24" placeholder="plazos a de pago (meses)" >
+                            </div>
+                            <div class="form-group">
+                                <input type="number" name = "placa" class="form-control" min= "0" max="1" placeholder="placa" >
+                            </div>
+
+                            <p>
+                                <label for="fname">modo de pago:</label><br>
+                                <select name="metodopago" id="" class="form-control" type ="text">
+                                    
+                                    {% for venta in pago%}
+                                    <option>{{forloop.counter}} {{venta.tipo}}</option>                                 
+                                    
+                                    {%endfor%}
+                                </select>
+                            </p>
+                            <p>
+                                <label for="fname">Empleado:</label><br>
+                                <select name="empleado" id="" class="form-control" type ="text">
+                                    
+                                    {% for venta in empleado%}
+                                    <option>{{venta.noempleado}} {{venta.nombre}}</option>                                 
+                                    
+                                    {%endfor%}
+                                </select>
+                            </p>
+
+
+                            <div class="form-group">
+                                <button type="sumbit" class = "btn btn-success btn-lg btn-block text-white"  >Guardar </button>
                             </div>
                             
                         </form>
@@ -38,32 +101,33 @@
             
 
 
-            <div class="col-md-8">
+            <div class="col-md-9">
                 <h2>listado de ventas</h2>
                 <div class="card">
                     <div class = "table-responsive">
                         <table class = "table table-striped">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
+                                   
                                     <th>Fecha</th>
                                     <th>Auto</th>
                                     <th>Placa</th>
                                     <th>Cliente</th>
                                     <th>Vendedor</th>
+                                    <th>Monto por unidad</th>
                                 </tr>   
                             </thead>
                             <tbody>
-                                {% for venta in object_list%}
+                                {% for venta in dventas%}
                                 <tr>
-                                    <td>{{venta.venta.id_venta}}</td>
                                     <td>{{venta.venta.fechacompra}}</td>
                                     <td>{{venta.lote.especifcarro.modelo.nombre}}</td>
                                     <td>{{venta.venta.tramplaca}}</td>
                                     <td>{{venta.venta.cliente.nombre}}</td>
                                     <td>{{venta.venta.empleado.nombre}}</td>
-                                    <td><a href="edit/{{venta.id_venta}}" class="btn btn-sm btn-block btn-primary">Editar</a></td>
-                                    <td><a href="eliminacionventa/{{venta.id_venta}}" class="btn btn-sm btn-block btn-danger" >Eliminar</a></td>
+                                    <td>{{venta.lote.especifcarro.costo}}</td>
+                                    <td><a href="edit/{{venta.venta.id_venta}}" class="btn btn-sm btn-block btn-primary">Editar</a></td>
+                                    <td><a href="/ventas/eliminacionventa/{{venta.venta.id_venta}}" class="btn btn-sm btn-block btn-danger" >Eliminar</a></td>
                                 </tr>
                                 {% endfor%}
                             </tbody>
