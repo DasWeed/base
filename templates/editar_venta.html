@@ -13,12 +13,12 @@
                     <form action="/" method="POST"> {% csrf_token %}
                         <div class = "navbar-nav">
                             <input type="text" name="idventa"  class="form-control"  value="{{venta.id_venta}}" readonly required>
-                            <input type="text" name="txtnombrecliente" class="form-control" placeholder="Nombre" value={{venta.nombre}}>
-                            <input type="text" name ="txtapellidopcliente" class="form-control" placeholder="apellido paterno" value={{cliente.ap_paterno}}>
-                            <input type="text" name ="txtapellidomcliente" class="form-control" placeholder="apellido materno" value={{cliente.ap_materno}}>
-                            <input type="date" name = "fnacimiento" class="form-control" value="{{venta.fechacompra}" >
-                            <input type="email" name="email" class="form-control" value="{{cliente.correo}}">
-                             <input type="phone" name ="phonecliente" class="form-control" placeholder="telefono" value={{cliente.telefono}}>
+                            <input type="text" name="cliente" class="form-control" placeholder="Nombre" value={{venta.cliente.nombre}}>
+                            <input type="text" name ="empleado" class="form-control" placeholder="empleado" value={{venta.empleado.nombre}}>
+                            <input type="text" name ="modopago" class="form-control" placeholder="modo de pago" value={{venta.modopago.tipo}}>
+                            <input type="date" name = "fechacompra" class="form-control" value="{{venta.fechacompra}" >
+                            <input type="number" name="placa" class="form-control" value="{{venta.tramplaca}}">
+                             <input type="phone" name ="plazospago" class="form-control" placeholder="telefono" value={{cliente.telefono}}>
                         </div>
                         <div class="form-group">
                             <button type="sumbit" class = "btn btn-success btn-lg btn-block text-white"  >Guardar </button>

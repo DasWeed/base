@@ -50,7 +50,12 @@ def editar_venta(request,id_venta):
 
 def editar_venta_post(request):
     id = request.POST.get('id_venta')
-    print(id)
+    idcliente =  request.POST.get('cliente')[0:7]
+    empleado = request.POST.get('empleado')[0:7]
+    fecha = request.POST.get('fechacompra')
+    placas = request.POST.get('placa')
+    pago = request.POST.get('metodopago')[0]
+    plazos = request.POST.get('plazospago')
     pass
 
 
