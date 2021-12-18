@@ -9,10 +9,8 @@ urlpatterns = [
 
 
     path('ventas/',ventaview.as_view() , name='ventas'),
-    path('ventas/<slug:id_venta>', ventaview.as_view(), name='proceso_de_venta'),
-    path('ventas/edit/<slug:id_venta>',editar_venta),
-    path('ventas/editar',editar_venta_post),
-    path('edit/<slug:venta_id>',editar_venta),
+    path('ventas/edit/<slug:id_venta>',editar_ventaView.as_view()),
+    path('ventas/edit/',editar_venta_post),
     path('ventas/eliminacionventa/<slug:venta_id>',eliminar_venta),
     path('ventas/new/',new_venta),
 

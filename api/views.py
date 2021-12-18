@@ -27,7 +27,7 @@ class ventaview(TemplateView):
     template_name = 'lista_venta.html'
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['dventas'] = DetalleVenta.objects.all()
+        context['dventas'] = DetalleVenta.objects.all().order_by('-venta')
         context['ventas'] = Venta.objects.all()
         context['paquetes'] = Paquete.objects.all()
         context['autos'] = EspecifCarro.objects.all()
@@ -44,19 +44,29 @@ def eliminar_venta(request,venta_id):
         
     return redirect('/ventas')
     
-def editar_venta(request,id_venta):
-    venta = Venta.objects.get(id_venta=id_venta)
-    return render(request,"editar_venta.html",{'venta':venta})
+class editar_ventaView(TemplateView):
+    template_name = 'editar_venta.html'
+    def get_context_data(self,id_venta, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['venta'] = Venta.objects.get(id_venta=id_venta)
+        context['empleados'] = Empleado.objects.all()
+        context['modopago'] = Modopago.objects.all()
+        return context
+    pass
+    
+    
 
 def editar_venta_post(request):
-    id = request.POST.get('id_venta')
-    idcliente =  request.POST.get('cliente')[0:7]
-    empleado = request.POST.get('empleado')[0:7]
-    fecha = request.POST.get('fechacompra')
-    placas = request.POST.get('placa')
-    pago = request.POST.get('metodopago')[0]
-    plazos = request.POST.get('plazospago')
-    pass
+    cliente = request.POST.get('cliente')
+    cliente = Cliente.objects.get(nombre =cliente)
+    
+    empleado  = request.POST.get('empleado')
+    empleado  = Empleado.objects.get(nombre =empleado)
+
+
+    print("el empleado que te atendio es ", empleado.noempleado)
+    print(cliente.id_cliente)
+    return redirect('/ventas')
 
 
 def new_venta(request):
@@ -73,12 +83,15 @@ def new_venta(request):
     unidades = request.POST.get('cantidad')
     idlote = request.POST.get('lote')[0:5]
 
+
     
 
     #tabla de venta
 
     idcliente =  request.POST.get('cliente')[0:7]
-    empleado = request.POST.get('empleado')[0:7]
+    empleado = request.POST.get('empleado')
+    empleado = Empleado.objects.get(nombre=empleado)
+    empleado = empleado.noempleado
     fecha = request.POST.get('fechacompra')
     placas = request.POST.get('placa')
     pago = request.POST.get('metodopago')[0]
@@ -101,18 +114,6 @@ def new_venta(request):
         cantidad =unidades
     )
   
-
-    print("el id de la venta es ", idventa)
-    print("el id del lote es ---> ",idlote)
-    print("el total de autos que vas a comprar es de ",  unidades ," acaso eres rico??")
-    print("el paquete es --->",paquete)
-    print("cliente ---->",idcliente)
-    print("el cliente es" ,idcliente)
-    print("realizo la venta el empleado" ,empleado)
-    print("se hizo la compra la fecha :",fecha)
-    print("hay tramite de placas?",placas)
-    print("el metodo de pago es :",pago)
-    print("el auto se vendio a ",plazos)
 
     
     return redirect('/ventas')
