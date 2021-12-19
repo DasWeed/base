@@ -13,10 +13,10 @@
                     <form action="/ventas/edit/" method="post" > {% csrf_token %}
                         <div class = "navbar-nav">
                             <input type="text" name="idventa"  class="form-control"  value="{{venta.id_venta}}" readonly required>
-                            <input type="text" name="cliente" class="form-control" placeholder="Nombre" value={{venta.cliente.nombre}}>
+                            <input type="text" readonly name="cliente" class="form-control" placeholder="Nombre" value={{venta.cliente.nombre}}>
 
                             <p>
-                                <label for="fname">Empleados:</label><br>
+                                
                                 <label class="form-control" readonly>empleado con la venta actual es : {{venta.empleado.nombre}}</label>
                                 <select name="empleado" id="" class="form-control" type ="text">
                                 
@@ -28,11 +28,13 @@
                                 </select>
                             </p>
                             <p>
+                                
+                                <label for="">el metodo de pago acual es {{venta.modopago.tipo}}</label>
                                 <label for="fname">Metodo de pago:</label><br>
                                 <select name="pago" id="" class="form-control" type ="text">
                                 
                                     {% for pago in modopago%}
-                                    <option>{{pago.tipo}} </option>
+                                    <option>{{forloop.counter}} {{pago.tipo}} </option>
                                 
                                     
                                     {%endfor%}
@@ -41,12 +43,29 @@
                             </p>
                             <label for="">fecha de compra actual {{venta.fechacompra}}</label>
                             <input type="date" name = "fechacompra" class="form-control" value="{{venta.fechacompra}}" >
-                            
-                            <input type="number" name="placa" class="form-control" value="{{venta.tramplaca}}" placeholder ="placas">
+
+                            <label for="">tramite de placas </label>
+                            <input type="number" name="placa" class="form-control" value="{{venta.tramplaca}}" placeholder ="placas" min="0" max="1">
                         </div>
+
+
+                        <p>
+
+                            <label for="fname">carro actual {{dventa.lote.especifcarro.version_carro}}  {{dventa.lote.especifcarro.modelo.nombre}}:</label>
+                            <select name="lote" id="" class="form-control" type ="text">
+                            
+                                {% for tipo in lote%}
+                                <option>{{tipo.id_lote}} {{tipo.especifcarro.version_carro}} {{tipo.especifcarro.modelo.nombre}} {{tipo.color}}</option>
+                            
+                                
+                                {%endfor%}
+                            </select>
+                        </p>
                         <div class="form-group">
                             <button type="sumbit" class = "btn btn-success btn-lg btn-block text-white"  >Guardar </button>
                         </div> 
+
+                       
                     </form>
 
                     

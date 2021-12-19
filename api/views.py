@@ -49,23 +49,51 @@ class editar_ventaView(TemplateView):
     def get_context_data(self,id_venta, **kwargs):
         context = super().get_context_data(**kwargs)
         context['venta'] = Venta.objects.get(id_venta=id_venta)
+        context['dventa'] = DetalleVenta.objects.get(venta_id=id_venta)
         context['empleados'] = Empleado.objects.all()
         context['modopago'] = Modopago.objects.all()
+        context['lote'] = Lote.objects.all()
         return context
-    pass
+    pass    
     
     
 
 def editar_venta_post(request):
+    editventa = request.POST.get('idventa')
+    ventanew = Venta.objects.get(id_venta=editventa)
+    dventanew = DetalleVenta.objects.get(venta_id=ventanew)
+    print(ventanew)
+    print(dventanew)
     cliente = request.POST.get('cliente')
     cliente = Cliente.objects.get(nombre =cliente)
     
     empleado  = request.POST.get('empleado')
+    
     empleado  = Empleado.objects.get(nombre =empleado)
 
 
+    pago = request.POST.get('pago')[0]
+    fecha = request.POST.get('fechacompra')
+    placa = request.POST.get('placa')
+    idlote = request.POST.get('lote')[0:5]
+
+
+    print(fecha)
+    print(pago)
+    print("el trama de las placas es " , placa)
+    print("el lote",idlote)
     print("el empleado que te atendio es ", empleado.noempleado)
     print(cliente.id_cliente)
+    
+
+
+    ventanew.fechacompra =fecha
+    ventanew.tramplaca = placa
+    ventanew.empleado = empleado
+    ventanew.metodopago = pago
+    ventanew.save()
+    dventanew.lote_id = idlote
+    dventanew.save()
     return redirect('/ventas')
 
 
@@ -288,7 +316,7 @@ def agregar_auto_nuevo(request):
 def eliminar_auto(request,id_lote):
     Lot = Lote.objects.get(id_lote=id_lote)
     if Lot.cantidad == 0:
-        Lot = Lote.objects.get(id_lote=id_lote).delete
+        Lot = Lote.objects.get(id_lote=id_lote).delete()
     else:
         Lot.cantidad -= 1
         Lot.save(update_fields=['cantidad'])

@@ -8,7 +8,7 @@
         <div class="row">
 
             
-            <div class = "col-md-4">
+            <div class = "col-md-3">
                 <h2>Agregar nuevo cliente</h2>
                 <div class ="card"> 
                     <div class="card-body ">
@@ -41,7 +41,7 @@
             
 
 
-            <div class="col-md-8">
+            <div class="col-md-9">
                 <h2>Clientes</h2>
                 <div class="card">
                     <div class = "table-responsive">
@@ -49,7 +49,7 @@
                             <thead>
                                 <tr>
                                     <th>nombre</th>
-                                    <th>Fecha</th>
+                                    <th>Fecha de nacimiento </th>
                         
                                     <th>Correo</th>
                                     <th>Numero</th>
@@ -58,7 +58,7 @@
                             <tbody>
                                 {% for c in object_list%}
                                 <tr>
-                                    <td>{{c.nombre}} {{c.ap_paterno}}</td>
+                                    <td>{{c.nombre}} {{c.ap_paterno}} {{c.ap_materno}}</td>
                                     <td>{{c.fechanacimiento}}</td>
                     
                                     <td>{{c.correo}}</td>
